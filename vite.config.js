@@ -17,10 +17,16 @@ const runGit = (command) => {
   }
 }
 
-process.env.VITE_GIT_BRANCH = runGit('git rev-parse --abbrev-ref HEAD') || 'unknown'
-process.env.VITE_GIT_VERSION = runGit('git describe --tags --dirty')
-  || runGit('git rev-parse --short HEAD')
-  || 'dev'
+const isGitAvailable = runGit('git rev-parse --is-inside-work-tree') === 'true'
+
+process.env.VITE_GIT_BRANCH = isGitAvailable
+  ? runGit('git rev-parse --abbrev-ref HEAD') || 'unknown'
+  : 'unknown'
+process.env.VITE_GIT_VERSION = isGitAvailable
+  ? runGit('git describe --tags --dirty')
+    || runGit('git rev-parse --short HEAD')
+    || 'dev'
+  : 'dev'
 
 export default defineConfig({
   base: './',
