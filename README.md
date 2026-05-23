@@ -113,6 +113,8 @@ This can be used:
 
 If you want the latest code without waiting for the next release, you can clone this repo, build assets and copy `dist` files in web directory:
 
+Requirements: [Node.js](https://nodejs.org/) >= 20 and [pnpm](https://pnpm.io/) 10 (`npm install -g pnpm@10`).
+
 ```bash
 git clone https://github.com/nioc/xmpp-web.git xmpp-web
 cd xmpp-web
