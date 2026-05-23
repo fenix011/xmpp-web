@@ -113,9 +113,12 @@ This can be used:
 
 If you want the latest code without waiting for the next release, you can clone this repo, build assets and copy `dist` files in web directory:
 
+Requirements: [Node.js](https://nodejs.org/) >= 20 with [Corepack](https://nodejs.org/api/corepack.html) (included since Node.js 16.9).
+
 ```bash
 git clone https://github.com/nioc/xmpp-web.git xmpp-web
 cd xmpp-web
+corepack enable
 pnpm install --frozen-lockfile
 pnpm run build
 nano dist/local.js
