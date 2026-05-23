@@ -113,7 +113,7 @@ This can be used:
 
 If you want the latest code without waiting for the next release, you can clone this repo, build assets and copy `dist` files in web directory:
 
-Requirements: [Node.js](https://nodejs.org/) >= 20 and [pnpm](https://pnpm.io/) 10 (`npm install -g pnpm@10`).
+Requirements: [Node.js](https://nodejs.org/) >= 20 and [pnpm](https://pnpm.io/) 10 (recommended: `corepack enable && corepack prepare pnpm@10.24.0 --activate`).
 
 ```bash
 git clone https://github.com/nioc/xmpp-web.git xmpp-web
@@ -124,6 +124,8 @@ nano dist/local.js
 mv dist /var/www/xmpp-web
 chown www-data /var/www/xmpp-web/ -R
 ```
+
+Build metadata uses Git when available. If your checkout has no tags (for example Debian/source package or shallow/tagless clones), the build falls back automatically to commit SHA (or `dev` when Git metadata is unavailable).
 
 ## Upgrade
 

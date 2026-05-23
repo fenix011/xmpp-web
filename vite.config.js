@@ -7,12 +7,26 @@ import mkcert from 'vite-plugin-mkcert'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { execSync } from 'child_process'
 
-process.env.VITE_GIT_BRANCH = execSync('git rev-parse --abbrev-ref HEAD')
-  .toString()
-  .trimEnd()
-process.env.VITE_GIT_VERSION = execSync('git describe --tags --dirty')
-  .toString()
-  .trimEnd()
+const runGit = (command) => {
+  try {
+    return execSync(command, { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .trimEnd()
+  } catch {
+    return null
+  }
+}
+
+const isGitAvailable = runGit('git rev-parse --is-inside-work-tree') === 'true'
+
+process.env.VITE_GIT_BRANCH = isGitAvailable
+  ? runGit('git rev-parse --abbrev-ref HEAD') || 'unknown'
+  : 'unknown'
+process.env.VITE_GIT_VERSION = isGitAvailable
+  ? runGit('git describe --tags --dirty')
+    || runGit('git rev-parse --short HEAD')
+    || 'dev'
+  : 'dev'
 
 export default defineConfig({
   base: './',
